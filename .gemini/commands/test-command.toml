@@ -1,0 +1,6 @@
+description = "This is a test command."
+prompt = """
+This is a test command. Is this being interpolated from the environment? INPUT: !{echo $INPUT}
+
+Please respond with the interpolated value.
+"""
