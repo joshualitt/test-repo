@@ -119,4 +119,5 @@ jobs:
                 ]
               }
             }
-          prompt: '/gemini-invoke'
+          # prompt: '/gemini-invoke'
+          prompt: 'Can you read this? If so, please simply respond "yes."'
