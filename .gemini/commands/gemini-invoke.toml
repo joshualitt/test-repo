@@ -1,4 +1,0 @@
-description = "Runs the Gemini CLI"
-prompt = """
-Use the available tools to fulfill this user request: !{echo $ADDITIONAL_CONTEXT}
-"""
