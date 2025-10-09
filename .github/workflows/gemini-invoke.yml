@@ -39,7 +39,7 @@ jobs:
 
       - name: 'Run Gemini CLI'
         id: 'run_gemini'
-        uses: 'joshualitt/run-gemini-cli@move-invoke' # ratchet:exclude
+        uses: 'joshualitt/run-gemini-cli@move-rest' # ratchet:exclude
         env:
           TITLE: '${{ github.event.pull_request.title || github.event.issue.title }}'
           DESCRIPTION: '${{ github.event.pull_request.body || github.event.issue.body }}'
@@ -120,4 +120,3 @@ jobs:
               }
             }
           prompt: '/gemini-invoke'
-          #prompt: 'Can you read this? If so, please simply respond "yes."'
