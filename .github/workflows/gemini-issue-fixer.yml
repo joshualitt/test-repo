@@ -89,6 +89,6 @@ jobs:
                 "target": "local",
                 "otlpEndpoint": "",
                 "outfile": ".gemini/telemetry.log"
-              },
+              }
             }
           prompt: '/gemini-issue-fixer'
