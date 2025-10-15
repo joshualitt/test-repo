@@ -55,7 +55,7 @@ jobs:
         id: 'gemini_analysis'
         if: |-
           ${{ steps.get_labels.outputs.available_labels != '' }}
-        uses: 'joshualitt/run-gemini-cli@engineer-all' # ratchet:exclude
+        uses: 'joshualitt/run-gemini-cli@local-telemetry' # ratchet:exclude
         env:
           GITHUB_TOKEN: '' # Do NOT pass any auth tokens here since this runs on untrusted inputs
           ISSUE_TITLE: '${{ github.event.issue.title }}'
@@ -79,8 +79,10 @@ jobs:
                 "maxSessionTurns": 25
               },
               "telemetry": {
-                "enabled": ${{ vars.GOOGLE_CLOUD_PROJECT != '' }},
-                "target": "gcp"
+                "enabled": true,
+                "target": "local",
+                "otlpEndpoint": "",
+                "outfile": ".gemini/telemetry.log"
               },
               "tools": {
                 "core": [
@@ -88,8 +90,6 @@ jobs:
                 ]
               }
             }
-          # For reasons beyond my understanding, Gemini CLI cannot set the
-          # GitHub Outputs, but it CAN set the GitHub Env.
           prompt: '/gemini-triage'
 
   label:

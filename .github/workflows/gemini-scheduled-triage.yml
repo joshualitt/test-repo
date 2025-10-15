@@ -85,7 +85,7 @@ jobs:
         id: 'gemini_issue_analysis'
         if: |-
           ${{ steps.find_issues.outputs.issues_to_triage != '[]' }}
-        uses: 'joshualitt/run-gemini-cli@engineer-all' # ratchet:exclude
+        uses: 'joshualitt/run-gemini-cli@local-telemetry' # ratchet:exclude
         env:
           GITHUB_TOKEN: '' # Do not pass any auth token here since this runs on untrusted inputs
           ISSUES_TO_TRIAGE: '${{ steps.find_issues.outputs.issues_to_triage }}'
@@ -109,8 +109,10 @@ jobs:
                 "maxSessionTurns": 25
               },
               "telemetry": {
-                "enabled": ${{ vars.GOOGLE_CLOUD_PROJECT != '' }},
-                "target": "gcp"
+                "enabled": true,
+                "target": "local",
+                "otlpEndpoint": "",
+                "outfile": ".gemini/telemetry.log"
               },
               "tools": {
                 "core": [
