@@ -39,7 +39,7 @@ jobs:
 
       - name: 'Run Gemini CLI'
         id: 'run_gemini'
-        uses: 'joshualitt/run-gemini-cli@engineer-all' # ratchet:exclude
+        uses: 'joshualitt/run-gemini-cli@local-telemetry' # ratchet:exclude
         env:
           TITLE: '${{ github.event.pull_request.title || github.event.issue.title }}'
           DESCRIPTION: '${{ github.event.pull_request.body || github.event.issue.body }}'
@@ -67,8 +67,10 @@ jobs:
                 "maxSessionTurns": 25
               },
               "telemetry": {
-                "enabled": ${{ vars.GOOGLE_CLOUD_PROJECT != '' }},
-                "target": "gcp"
+                "enabled": true,
+                "target": "local",
+                "otlpEndpoint": "",
+                "outfile": ".gemini/telemetry.log"
               },
               "mcpServers": {
                 "github": {
