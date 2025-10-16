@@ -1,0 +1,32 @@
+name: 'Test GCP Authentication'
+
+on:
+  workflow_dispatch: # Allows you to run this workflow manually
+
+permissions:
+  contents: 'read'
+  id-token: 'write' # Required for Workload Identity Federation
+
+jobs:
+  test-auth:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: 'Checkout code'
+        uses: 'actions/checkout@v4'
+
+      - name: 'Authenticate to Google Cloud'
+        id: 'auth'
+        uses: 'google-github-actions/auth@v2'
+        with:
+          workload_identity_provider: '${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}'
+          service_account: '${{ vars.GCP_SERVICE_ACCOUNT }}'
+          project_id: '${{ vars.GCP_PROJECT_ID }}'
+
+      - name: 'Set up Cloud SDK'
+        uses: 'google-github-actions/setup-gcloud@v2'
+
+      - name: 'Verify authentication by running a gcloud command'
+        run: |-
+          echo "Successfully authenticated to GCP."
+          echo "Running a read-only command to verify token permissions..."
+          gcloud projects describe ${{ vars.GCP_PROJECT_ID }} --format="json"
